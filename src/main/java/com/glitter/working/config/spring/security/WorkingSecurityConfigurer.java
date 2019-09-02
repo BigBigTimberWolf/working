@@ -5,10 +5,13 @@ import com.glitter.working.module.spring.security.config.adapter.provider.Author
 import com.glitter.working.module.spring.security.config.adapter.provider.LoginAuthorizeConfigProvider;
 import com.glitter.working.module.spring.security.config.adapter.provider.RestAuthorizeConfigProvider;
 import com.glitter.working.module.spring.security.config.userInfo.WorkingSecurityUserDetailsService;
+import com.glitter.working.module.spring.security.defaultconfiger.CustomUserInfoFactory;
 import com.glitter.working.module.spring.security.handle.CustomSecurityMetadataSource;
+import com.glitter.working.module.spring.security.handle.UserInfoFactory;
 import com.glitter.working.module.spring.security.handle.decision.CustomAccessDecisionManager;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +37,14 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "working.security",name = "enable",havingValue = "true")
 @EnableConfigurationProperties({WorkingSecurityProperty.class})
 public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
+
+
+    @Bean
+    @ConditionalOnMissingBean(UserInfoFactory.class)
+    public UserInfoFactory userInfoFactory(){
+        return new CustomUserInfoFactory();
+    }
+
     @Bean
     public WorkingSecurityUserDetailsService securityUserDetailsService(){
         return  new WorkingSecurityUserDetailsService();
