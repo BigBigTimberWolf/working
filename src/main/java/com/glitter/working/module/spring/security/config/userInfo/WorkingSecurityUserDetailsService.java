@@ -1,4 +1,4 @@
-package com.glitter.working.module.spring.security.config;
+package com.glitter.working.module.spring.security.config.userInfo;
 
 import com.glitter.working.module.spring.security.defaultconfiger.CustomUserInfoFactory;
 import com.glitter.working.module.spring.security.handle.UserInfoFactory;

@@ -1,4 +1,4 @@
-package com.glitter.working.properties.spring.security;
+package com.glitter.working.properties.spring.web;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

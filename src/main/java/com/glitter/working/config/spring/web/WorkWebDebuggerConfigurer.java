@@ -1,7 +1,7 @@
 package com.glitter.working.config.spring.web;
 
 import com.glitter.working.module.spring.web.filter.DebugFilter;
-import com.glitter.working.properties.spring.security.WorkingWebProperty;
+import com.glitter.working.properties.spring.web.WorkingWebProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,5 +21,4 @@ public class WorkWebDebuggerConfigurer {
     public OncePerRequestFilter debugFilter(){
         return new DebugFilter();
     }
-
 }
