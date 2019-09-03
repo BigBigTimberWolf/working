@@ -27,4 +27,6 @@ working:
   mode: black        #投票模式：black黑名单模式，默认白名单模式
  web:
   debug: false       #开启请求Debug模式，展示部分请求debug信息
+ cache:
+  enable: true      #开启过期缓存
 ```
