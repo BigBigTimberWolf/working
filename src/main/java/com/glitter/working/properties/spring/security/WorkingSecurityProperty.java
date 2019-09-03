@@ -22,11 +22,14 @@ public class WorkingSecurityProperty {
     private String loginPage="/login/page";
     /*登录成功页面*/
     private String successForwardUrl="/";
-    /*登录失败*/
 
     /*注销链接*/
     private String logout="/logout";
 
     /*注销成功之后跳转url*/
     private String logoutSuccess="/logout/success";
+
+    /*白名单模式white还是黑名单模式black*/
+    private String mode="white";
+
 }

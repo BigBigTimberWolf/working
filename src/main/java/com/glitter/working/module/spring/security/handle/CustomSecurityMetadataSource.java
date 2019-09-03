@@ -1,15 +1,21 @@
 package com.glitter.working.module.spring.security.handle;
 
 import com.glitter.working.module.spring.security.defaultconfiger.CustomSecurityContext;
+import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
@@ -23,13 +29,9 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 
     @Autowired
     private MetadataSourceFactory metadataSourceFactory;
-    @Bean
-    @ConditionalOnMissingBean(MetadataSourceFactory.class)
-    public MetadataSourceFactory metadataSourceFactory(){
-        return new CustomSecurityContext();
-    }
 
-
+    @Autowired
+    private WorkingSecurityProperty workingSecurityProperty;
 
     /*本次访问需要的权限集合，返回null则为默认白名单*/
     @Override
@@ -43,9 +45,15 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
                 return entry.getValue();
             }
         }
-        /*Collection<ConfigAttribute> anymoreConfigAttributes = new ArrayList<ConfigAttribute>();
-        anymoreConfigAttributes.add(new SecurityConfig("anymore"));
-        return anymoreConfigAttributes;*/
+
+        if(whiteListCheck(fi.getHttpRequest()))
+            return null;
+
+        if("black".equals(workingSecurityProperty.getMode())){
+            Collection<ConfigAttribute> anymoreConfigAttributes = new ArrayList<ConfigAttribute>();
+            anymoreConfigAttributes.add(new SecurityConfig("NoAuthorization"));
+            return anymoreConfigAttributes;
+        }
         return  null;
     }
 
@@ -59,5 +67,26 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
+    }
+
+
+    private boolean whiteListCheck(HttpServletRequest httpServletRequest){
+
+        if(requestMatcherFactory(workingSecurityProperty.getLogin()).matches(httpServletRequest))
+            return true;
+        if(requestMatcherFactory(workingSecurityProperty.getLoginPage()).matches(httpServletRequest))
+            return true;
+        if(requestMatcherFactory(workingSecurityProperty.getSuccessForwardUrl()).matches(httpServletRequest))
+            return true;
+        if(requestMatcherFactory(workingSecurityProperty.getLogout()).matches(httpServletRequest))
+            return true;
+        if(requestMatcherFactory(workingSecurityProperty.getLogoutSuccess()).matches(httpServletRequest))
+            return true;
+
+        return false;
+    }
+
+    private RequestMatcher requestMatcherFactory(String url){
+        return new AntPathRequestMatcher(url);
     }
 }

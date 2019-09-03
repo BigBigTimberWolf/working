@@ -3,10 +3,13 @@ package com.glitter.working.config.spring.security;
 import com.glitter.working.module.spring.security.config.adapter.CoreAuthorizeConfigManager;
 import com.glitter.working.module.spring.security.config.adapter.provider.AuthorizeConfigProvider;
 import com.glitter.working.module.spring.security.config.adapter.provider.LoginAuthorizeConfigProvider;
+import com.glitter.working.module.spring.security.config.adapter.provider.PostProcessorAuthorizeConfigProvider;
 import com.glitter.working.module.spring.security.config.adapter.provider.RestAuthorizeConfigProvider;
 import com.glitter.working.module.spring.security.config.userInfo.WorkingSecurityUserDetailsService;
+import com.glitter.working.module.spring.security.defaultconfiger.CustomSecurityContext;
 import com.glitter.working.module.spring.security.defaultconfiger.CustomUserInfoFactory;
 import com.glitter.working.module.spring.security.handle.CustomSecurityMetadataSource;
+import com.glitter.working.module.spring.security.handle.MetadataSourceFactory;
 import com.glitter.working.module.spring.security.handle.UserInfoFactory;
 import com.glitter.working.module.spring.security.handle.decision.CustomAccessDecisionManager;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
@@ -18,13 +21,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 import java.util.List;
 
@@ -46,6 +47,12 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @ConditionalOnMissingBean(MetadataSourceFactory.class)
+    public MetadataSourceFactory metadataSourceFactory(){
+        return new CustomSecurityContext();
+    }
+
+    @Bean
     public WorkingSecurityUserDetailsService securityUserDetailsService(){
         return  new WorkingSecurityUserDetailsService();
     }
@@ -61,14 +68,20 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @Order(Byte.MIN_VALUE+1)
+    public PostProcessorAuthorizeConfigProvider postProcessorAuthorizeConfigProvider(){
+        return new PostProcessorAuthorizeConfigProvider(customAccessDecisionManager(),customSecurityMetadataSource());
+    }
+
+    @Bean
     @Order(Byte.MIN_VALUE)
-    public AuthorizeConfigProvider LoginAuthorizeConfigProvider(){
+    public AuthorizeConfigProvider loginAuthorizeConfigProvider(){
         return new LoginAuthorizeConfigProvider();
     }
     @Bean
     @ConditionalOnProperty(prefix = "working.security",name = "type",havingValue = "rest")
-    @Order(Byte.MIN_VALUE+1)
-    public AuthorizeConfigProvider RestAuthorizeConfigProvider(){
+    @Order(Byte.MIN_VALUE+2)
+    public AuthorizeConfigProvider restAuthorizeConfigProvider(){
         return new RestAuthorizeConfigProvider();
     }
 
@@ -86,49 +99,16 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
 
-    @Autowired
-    private WorkingSecurityProperty workingSecurityProperty;
+
 
     @Autowired
     private CoreAuthorizeConfigManager coreAuthorizeConfigManager;
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-      /*  System.out.println("登录连接:"+workingSecurityProperty.getLogin());
-        http
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and().formLogin()
-                .loginProcessingUrl(workingSecurityProperty.getLogin()).permitAll()
-                .loginPage(workingSecurityProperty.getLoginPage()).permitAll()
-                .successForwardUrl(workingSecurityProperty.getSuccessForwardUrl())
-                .and()
-                .logout()
-                .logoutUrl(workingSecurityProperty.getLogout())
-                .logoutSuccessUrl(workingSecurityProperty.getLogoutSuccess()).permitAll()
-                .and().authorizeRequests().anyRequest().authenticated()
-                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
-                        fsi.setAccessDecisionManager(customAccessDecisionManager());
-                        fsi.setSecurityMetadataSource(customSecurityMetadataSource());
-                        return fsi;
-                    }
-                });
-        http.csrf().disable();*/
         coreAuthorizeConfigManager.config(http);
-        http.authorizeRequests().anyRequest().authenticated()
-                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
-                        fsi.setAccessDecisionManager(customAccessDecisionManager());
-                        fsi.setSecurityMetadataSource(customSecurityMetadataSource());
-                        return fsi;
-                    }
-                });
         http.csrf().disable();
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

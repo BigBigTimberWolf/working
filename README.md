@@ -10,16 +10,21 @@ working的目标就是将日常重复性的东西封装成starter，利用spring
 
 #### 安装教程
 
-```yaml
-working:
- security:
-  type: mvc   #security类型(MVC)
- web:
-  debug: false   #开启请求Debug模式，展示部分请求debug信息
-```
+
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
+```yaml
+working:
+ security:
+  enable: true       #是否开启working-spring-security
+  type: rest         #security类型(MVC、rest)
+  login: /login      #登录url
+  login-page: /login #登录页面url
+  #success-forward-url: / #登录成功重定向页面
+  logout: /logout    #注销页面
+  logout-success: /  #注销成功url
+  mode: black        #投票模式：black黑名单模式，默认白名单模式
+ web:
+  debug: false       #开启请求Debug模式，展示部分请求debug信息
+```
