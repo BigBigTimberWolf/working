@@ -72,15 +72,15 @@ public class CustomSecurityMetadataSource implements FilterInvocationSecurityMet
 
     private boolean whiteListCheck(HttpServletRequest httpServletRequest){
 
-        if(requestMatcherFactory(workingSecurityProperty.getLogin()).matches(httpServletRequest))
+        if(requestMatcherFactory(workingSecurityProperty.getLogin().getLoginUrl()).matches(httpServletRequest))
             return true;
-        if(requestMatcherFactory(workingSecurityProperty.getLoginPage()).matches(httpServletRequest))
+        if(requestMatcherFactory(workingSecurityProperty.getLogin().getLoginPage()).matches(httpServletRequest))
             return true;
-        if(requestMatcherFactory(workingSecurityProperty.getSuccessForwardUrl()).matches(httpServletRequest))
+        if(requestMatcherFactory(workingSecurityProperty.getLogin().getSuccessForwardUrl()).matches(httpServletRequest))
             return true;
-        if(requestMatcherFactory(workingSecurityProperty.getLogout()).matches(httpServletRequest))
+        if(requestMatcherFactory(workingSecurityProperty.getLogin().getLogoutUrl()).matches(httpServletRequest))
             return true;
-        if(requestMatcherFactory(workingSecurityProperty.getLogoutSuccess()).matches(httpServletRequest))
+        if(requestMatcherFactory(workingSecurityProperty.getLogin().getLogoutSuccess()).matches(httpServletRequest))
             return true;
 
         return false;

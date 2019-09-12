@@ -27,12 +27,12 @@ public class LoginAuthorizeConfigProvider implements AuthorizeConfigProvider {
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginProcessingUrl(workingSecurityProperty.getLogin()).permitAll()
-                .loginPage(workingSecurityProperty.getLoginPage()).permitAll()
-                .successForwardUrl(workingSecurityProperty.getSuccessForwardUrl())
+                .loginProcessingUrl(workingSecurityProperty.getLogin().getLoginUrl()).permitAll()
+                .loginPage(workingSecurityProperty.getLogin().getLoginPage()).permitAll()
+                .successForwardUrl(workingSecurityProperty.getLogin().getSuccessForwardUrl())
                 .and()
                 .logout()
-                .logoutUrl(workingSecurityProperty.getLogout())
-                .logoutSuccessUrl(workingSecurityProperty.getLogoutSuccess()).permitAll();
+                .logoutUrl(workingSecurityProperty.getLogin().getLogoutUrl())
+                .logoutSuccessUrl(workingSecurityProperty.getLogin().getLogoutSuccess()).permitAll();
     }
 }

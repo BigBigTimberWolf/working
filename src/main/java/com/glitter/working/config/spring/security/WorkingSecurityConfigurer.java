@@ -39,23 +39,27 @@ import java.util.List;
 public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
+    /*在没有提供用户信息的时候，默认提供一组用户信息*/
     @Bean
     @ConditionalOnMissingBean(UserInfoFactory.class)
     public UserInfoFactory userInfoFactory(){
         return new CustomUserInfoFactory();
     }
 
+    /*在没有提供权限的时候，默认提供一组权限*/
     @Bean
     @ConditionalOnMissingBean(MetadataSourceFactory.class)
     public MetadataSourceFactory metadataSourceFactory(){
         return new CustomSecurityContext();
     }
 
+    /*加载用户信息的bean*/
     @Bean
     public WorkingSecurityUserDetailsService securityUserDetailsService(){
         return  new WorkingSecurityUserDetailsService();
     }
 
+    /*自定义投票器*/
     @Bean
     public AccessDecisionManager customAccessDecisionManager(){
         return new CustomAccessDecisionManager();
@@ -66,17 +70,21 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new CustomSecurityMetadataSource();
     }
 
+    /*后置加载器、加载自定义投票器*/
     @Bean
     @Order(Byte.MIN_VALUE+1)
     public PostProcessorAuthorizeConfigProvider postProcessorAuthorizeConfigProvider(){
         return new PostProcessorAuthorizeConfigProvider(customAccessDecisionManager(),customSecurityMetadataSource());
     }
 
+    /*登录配置*/
     @Bean
+    @ConditionalOnProperty(prefix = "working.spring.security.login",name = "enable",havingValue = "true")
     @Order(Byte.MIN_VALUE)
     public AuthorizeConfigProvider loginAuthorizeConfigProvider(){
         return new LoginAuthorizeConfigProvider();
     }
+    /*是否有session，rest是没有，别的就是有*/
     @Bean
     @ConditionalOnProperty(prefix = "working.spring.security",name = "type",havingValue = "rest")
     @Order(Byte.MIN_VALUE+2)
@@ -95,9 +103,6 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     public CoreAuthorizeConfigManager coreAuthorizeConfigManager(List<AuthorizeConfigProvider> authorizeConfigManagers){
         return new CoreAuthorizeConfigManager(authorizeConfigManagers);
     }
-
-
-
 
 
     @Autowired
