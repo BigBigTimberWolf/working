@@ -56,11 +56,13 @@ public class WorkingCache  {
         return null;
     }
     private boolean checkNode(WorkingCacheNode node){
-            if(System.currentTimeMillis()>node.getEffectiveTime()){
+        if (node==null)
+            return false;
+        if(System.currentTimeMillis()>node.getEffectiveTime()){
                 remove(node.getKey());
                 return false;
-            }
-            return true;
+        }
+        return true;
     }
 
     /*删除*/

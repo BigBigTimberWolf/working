@@ -35,8 +35,7 @@ import java.util.List;
  * @create: 2019-08-29
  **/
 @Configuration
-@ConditionalOnProperty(prefix = "working.security",name = "enable",havingValue = "true")
-@EnableConfigurationProperties({WorkingSecurityProperty.class})
+@ConditionalOnProperty(prefix = "working.spring.security",name = "enable",havingValue = "true")
 public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
@@ -79,7 +78,7 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new LoginAuthorizeConfigProvider();
     }
     @Bean
-    @ConditionalOnProperty(prefix = "working.security",name = "type",havingValue = "rest")
+    @ConditionalOnProperty(prefix = "working.spring.security",name = "type",havingValue = "rest")
     @Order(Byte.MIN_VALUE+2)
     public AuthorizeConfigProvider restAuthorizeConfigProvider(){
         return new RestAuthorizeConfigProvider();
