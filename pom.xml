@@ -16,7 +16,6 @@
         <apache-commons-codec.version>1.11</apache-commons-codec.version>
         <apache-commons-io.version>2.6</apache-commons-io.version>
         <apache-commons-lang.version>3.9</apache-commons-lang.version>
-        <joor.version>0.9.6</joor.version>
     </properties>
 
 
@@ -25,6 +24,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,11 +40,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
 

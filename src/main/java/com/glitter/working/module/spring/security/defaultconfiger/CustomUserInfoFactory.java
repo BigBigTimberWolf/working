@@ -1,6 +1,6 @@
 package com.glitter.working.module.spring.security.defaultconfiger;
 
-import com.glitter.working.module.spring.security.handle.UserInfoFactory;
+import com.glitter.working.module.spring.security.handle.dataFactory.UserInfoFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

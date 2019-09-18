@@ -18,9 +18,6 @@ public class WorkingSecurityProperty {
     /*security模式*/
     private String type="mvc";
 
-    /*白名单模式white还是黑名单模式black*/
-    private String mode="white";
-
     @NestedConfigurationProperty
     private WorkingSecurityLoginProperty login;
 

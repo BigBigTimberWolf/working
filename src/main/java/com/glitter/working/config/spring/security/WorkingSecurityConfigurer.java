@@ -8,24 +8,20 @@ import com.glitter.working.module.spring.security.config.adapter.provider.RestAu
 import com.glitter.working.module.spring.security.config.userInfo.WorkingSecurityUserDetailsService;
 import com.glitter.working.module.spring.security.defaultconfiger.CustomSecurityContext;
 import com.glitter.working.module.spring.security.defaultconfiger.CustomUserInfoFactory;
-import com.glitter.working.module.spring.security.handle.CustomSecurityMetadataSource;
-import com.glitter.working.module.spring.security.handle.MetadataSourceFactory;
-import com.glitter.working.module.spring.security.handle.UserInfoFactory;
-import com.glitter.working.module.spring.security.handle.decision.CustomAccessDecisionManager;
-import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
+import com.glitter.working.module.spring.security.handle.dataFactory.MetadataSourceFactory;
+import com.glitter.working.module.spring.security.handle.dataFactory.UserInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
 import java.util.List;
 
@@ -36,6 +32,7 @@ import java.util.List;
  **/
 @Configuration
 @ConditionalOnProperty(prefix = "working.spring.security",name = "enable",havingValue = "true")
+@ConditionalOnClass(DefaultAuthenticationEventPublisher.class)
 public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
@@ -58,23 +55,11 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     public WorkingSecurityUserDetailsService securityUserDetailsService(){
         return  new WorkingSecurityUserDetailsService();
     }
-
-    /*自定义投票器*/
-    @Bean
-    public AccessDecisionManager customAccessDecisionManager(){
-        return new CustomAccessDecisionManager();
-    }
-
-    @Bean
-    public FilterInvocationSecurityMetadataSource customSecurityMetadataSource(){
-        return new CustomSecurityMetadataSource();
-    }
-
     /*后置加载器、加载自定义投票器*/
     @Bean
     @Order(Byte.MIN_VALUE+1)
     public PostProcessorAuthorizeConfigProvider postProcessorAuthorizeConfigProvider(){
-        return new PostProcessorAuthorizeConfigProvider(customAccessDecisionManager(),customSecurityMetadataSource());
+        return new PostProcessorAuthorizeConfigProvider();
     }
 
     /*登录配置*/

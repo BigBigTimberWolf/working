@@ -1,10 +1,7 @@
 package com.glitter.working.module.spring.security.config.userInfo;
 
-import com.glitter.working.module.spring.security.defaultconfiger.CustomUserInfoFactory;
-import com.glitter.working.module.spring.security.handle.UserInfoFactory;
+import com.glitter.working.module.spring.security.handle.dataFactory.UserInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
