@@ -32,10 +32,10 @@ public class CustomUserInfoFactory implements UserInfoFactory {
     public User getUserInfo(String username) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         if("admin".equals(username)){
-            authorities.add(new SimpleGrantedAuthority("admin"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             return  new User(username,encoderPassword(password),authorities);
         }else if("user".equals(username)){
-            authorities.add(new SimpleGrantedAuthority("user"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
             return new User(username,encoderPassword,authorities);
         }
         return null;

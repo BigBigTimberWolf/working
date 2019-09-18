@@ -15,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
  **/
 @Configuration
 @ConditionalOnProperty(prefix = "working.spring.web",name = "debug",havingValue = "true")
-@EnableConfigurationProperties({WorkingWebProperty.class})
 public class WorkWebDebuggerConfigurer {
     @Bean
     public OncePerRequestFilter debugFilter(){

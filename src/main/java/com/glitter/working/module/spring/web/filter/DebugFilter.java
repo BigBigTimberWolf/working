@@ -67,7 +67,7 @@ public class DebugFilter extends OncePerRequestFilter {
         StringBuffer logMessage = new StringBuffer().append("\r\n******************************HTTP Response******************************\r\n")
                 .append("Request URL : ").append(request.getRequestURL()).append("\r\n")
                 .append("Http Status : ").append(response.getStatus()).append("\r\n")
-                .append("Session ID : ").append(request.getSession(false)).append("\r\n")
+                .append("Session ID : ").append(request.getSession(false).getId()).append("\r\n")
                 .append("Content Type : ").append(response.getContentType()).append("\r\n")
                 .append("Headers : ").append(headers).append("\r\n");
 
@@ -99,7 +99,7 @@ public class DebugFilter extends OncePerRequestFilter {
         StringBuffer logMessage = new StringBuffer().append("\r\n******************************HTTP Request******************************\r\n")
                 .append("Request URL : ").append(request.getRequestURL()).append("\r\n")
                 .append("Method : ").append(serverHttpRequest.getMethod()).append("\r\n")
-                .append("Session ID : ").append(request.getSession(false)).append("\r\n")
+                .append("Session ID : ").append(request.getSession(false).getId()).append("\r\n")
                 .append("Client IP : ").append(serverHttpRequest.getRemoteAddress()).append("\r\n")
                 .append("Headers : ").append(serverHttpRequest.getHeaders()).append("\r\n")
                 .append("Cookie : ").append(cookieMessage).append("\r\n");

@@ -1,10 +1,7 @@
 package com.glitter.working.config.spring.security;
 
 import com.glitter.working.module.spring.security.config.adapter.CoreAuthorizeConfigManager;
-import com.glitter.working.module.spring.security.config.adapter.provider.AuthorizeConfigProvider;
-import com.glitter.working.module.spring.security.config.adapter.provider.LoginAuthorizeConfigProvider;
-import com.glitter.working.module.spring.security.config.adapter.provider.PostProcessorAuthorizeConfigProvider;
-import com.glitter.working.module.spring.security.config.adapter.provider.RestAuthorizeConfigProvider;
+import com.glitter.working.module.spring.security.config.adapter.provider.*;
 import com.glitter.working.module.spring.security.config.userInfo.WorkingSecurityUserDetailsService;
 import com.glitter.working.module.spring.security.defaultconfiger.CustomSecurityContext;
 import com.glitter.working.module.spring.security.defaultconfiger.CustomUserInfoFactory;
@@ -22,7 +19,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -67,6 +63,13 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Bean
     @ConditionalOnProperty(prefix = "working.spring.security.login",name = "enable",havingValue = "true")
     @Order(Byte.MIN_VALUE)
+    public AuthorizeConfigProvider enableLoginAuthorizeConfigProvider(){
+        return new EnableLoginAuthorizeConfigProvider();
+    }
+    /*登录配置*/
+    @Bean
+    @ConditionalOnMissingBean(EnableLoginAuthorizeConfigProvider.class)
+    @Order(Byte.MIN_VALUE)
     public AuthorizeConfigProvider loginAuthorizeConfigProvider(){
         return new LoginAuthorizeConfigProvider();
     }
@@ -101,6 +104,7 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         coreAuthorizeConfigManager.config(http);
         http.csrf().disable();
+
     }
 
     @Override
