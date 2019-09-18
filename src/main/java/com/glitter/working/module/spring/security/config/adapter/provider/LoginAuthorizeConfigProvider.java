@@ -1,5 +1,7 @@
 package com.glitter.working.module.spring.security.config.adapter.provider;
 
+import com.glitter.working.module.spring.security.handle.afterLogin.SecurityAuthenticationFailureHandler;
+import com.glitter.working.module.spring.security.handle.afterLogin.SecurityAuthenticationSuccessHandler;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,7 +21,6 @@ public class LoginAuthorizeConfigProvider implements AuthorizeConfigProvider {
     @Autowired
     private WorkingSecurityProperty workingSecurityProperty;
 
-    //todo 登录成功和注销成功的handler还没有添加
     @Override
     public void config(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
@@ -30,6 +31,8 @@ public class LoginAuthorizeConfigProvider implements AuthorizeConfigProvider {
                 .loginProcessingUrl(workingSecurityProperty.getLogin().getLoginUrl()).permitAll()
                 .loginPage(workingSecurityProperty.getLogin().getLoginPage()).permitAll()
                 .successForwardUrl(workingSecurityProperty.getLogin().getSuccessForwardUrl())
+                .successHandler(new SecurityAuthenticationSuccessHandler())
+                .failureHandler(new SecurityAuthenticationFailureHandler())
                 .and()
                 .logout()
                 .logoutUrl(workingSecurityProperty.getLogin().getLogoutUrl())
