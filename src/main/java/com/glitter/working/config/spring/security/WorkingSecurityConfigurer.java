@@ -2,11 +2,15 @@ package com.glitter.working.config.spring.security;
 
 import com.glitter.working.module.spring.security.config.adapter.CoreAuthorizeConfigManager;
 import com.glitter.working.module.spring.security.config.adapter.provider.*;
+import com.glitter.working.module.spring.security.config.dataFactory.factory.AuthFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.factory.DefaultAuth;
+import com.glitter.working.module.spring.security.config.dataFactory.factory.DefaultUser;
+import com.glitter.working.module.spring.security.config.dataFactory.factory.UserFactory;
 import com.glitter.working.module.spring.security.config.userInfo.WorkingSecurityUserDetailsService;
-import com.glitter.working.module.spring.security.defaultconfiger.CustomSecurityContext;
-import com.glitter.working.module.spring.security.defaultconfiger.CustomUserInfoFactory;
-import com.glitter.working.module.spring.security.handle.dataFactory.MetadataSourceFactory;
-import com.glitter.working.module.spring.security.handle.dataFactory.UserInfoFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.DefaultAuthFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.DefaultUserFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.MetadataSourceFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.UserInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -33,18 +37,30 @@ import java.util.List;
 public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
+
+    @Bean
+    public UserInfoFactory userInfoFactory(){
+        return new DefaultUserFactory();
+    }
     /*在没有提供用户信息的时候，默认提供一组用户信息*/
     @Bean
-    @ConditionalOnMissingBean(UserInfoFactory.class)
-    public UserInfoFactory userInfoFactory(){
-        return new CustomUserInfoFactory();
+    @ConditionalOnMissingBean(UserFactory.class)
+    public UserFactory userFactory(){
+        return new DefaultUser();
     }
 
+
+
+
+    @Bean
+    public MetadataSourceFactory metadataSourceFactory(){
+        return new DefaultAuthFactory();
+    }
     /*在没有提供权限的时候，默认提供一组权限*/
     @Bean
-    @ConditionalOnMissingBean(MetadataSourceFactory.class)
-    public MetadataSourceFactory metadataSourceFactory(){
-        return new CustomSecurityContext();
+    @ConditionalOnMissingBean(AuthFactory.class)
+    public AuthFactory authFactory(){
+        return new DefaultAuth();
     }
 
     /*加载用户信息的bean*/

@@ -1,6 +1,6 @@
 package com.glitter.working.module.spring.security.handle.metadataSource;
 
-import com.glitter.working.module.spring.security.handle.dataFactory.MetadataSourceFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.MetadataSourceFactory;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 

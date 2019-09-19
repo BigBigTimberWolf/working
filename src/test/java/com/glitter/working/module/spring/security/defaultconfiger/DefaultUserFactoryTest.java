@@ -7,7 +7,7 @@ import java.util.UUID;
 import static com.glitter.working.module.util.security.PasswordUtil.encoderPassword;
 
 
-public class CustomUserInfoFactoryTest {
+public class DefaultUserFactoryTest {
 
 
     @Test

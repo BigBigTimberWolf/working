@@ -1,4 +1,4 @@
-package com.glitter.working.module.spring.security.handle.dataFactory;
+package com.glitter.working.module.spring.security.config.dataFactory;
 
 import org.springframework.security.core.userdetails.User;
 
@@ -8,5 +8,5 @@ import org.springframework.security.core.userdetails.User;
  * @create: 2019-09-02
  **/
 public interface UserInfoFactory {
-    User getUserInfo(String username);
+    User getUser(String username);
 }

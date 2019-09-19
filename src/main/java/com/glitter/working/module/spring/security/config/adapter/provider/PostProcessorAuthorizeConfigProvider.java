@@ -1,6 +1,6 @@
 package com.glitter.working.module.spring.security.config.adapter.provider;
 
-import com.glitter.working.module.spring.security.handle.dataFactory.MetadataSourceFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.MetadataSourceFactory;
 import com.glitter.working.module.spring.security.handle.metadataSource.CustomSecurityMetadataPostProcessor;
 import com.glitter.working.module.spring.security.handle.metadataSource.GlobalSecurityExpressionHandlerCacheObjectPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;

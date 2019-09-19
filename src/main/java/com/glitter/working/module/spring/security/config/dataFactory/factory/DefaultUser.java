@@ -1,6 +1,5 @@
-package com.glitter.working.module.spring.security.defaultconfiger;
+package com.glitter.working.module.spring.security.config.dataFactory.factory;
 
-import com.glitter.working.module.spring.security.handle.dataFactory.UserInfoFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,32 +13,28 @@ import static com.glitter.working.module.util.security.PasswordUtil.encoderPassw
 /**
  * @program:
  * @author: Player
- * @create: 2019-09-02
+ * @create: 2019-09-19
  **/
-
-public class CustomUserInfoFactory implements UserInfoFactory {
-
-    private  static String password = "123456";
+public class DefaultUser implements UserFactory {
+    private  static String password = UUID.randomUUID().toString();
     private  static String encoderPassword = null;
 
     {
-         password=UUID.randomUUID().toString();
-         encoderPassword = encoderPassword(password);
-        System.out.println(password);
+        encoderPassword = encoderPassword(password);
+        System.out.println("Using generated security password: "+password);
     }
 
+
     @Override
-    public User getUserInfo(String username) {
+    public User getUser(String username) {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         if("admin".equals(username)){
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authorities.add(new SimpleGrantedAuthority("ADMIN"));
             return  new User(username,encoderPassword(password),authorities);
         }else if("user".equals(username)){
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+            authorities.add(new SimpleGrantedAuthority("USER"));
             return new User(username,encoderPassword,authorities);
         }
         return null;
     }
-
-
 }

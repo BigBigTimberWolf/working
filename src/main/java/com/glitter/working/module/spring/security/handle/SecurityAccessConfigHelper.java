@@ -3,6 +3,8 @@ package com.glitter.working.module.spring.security.handle;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * @author he peng
  */

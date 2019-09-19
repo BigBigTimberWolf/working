@@ -1,6 +1,6 @@
 package com.glitter.working.module.spring.security.config.userInfo;
 
-import com.glitter.working.module.spring.security.handle.dataFactory.UserInfoFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.UserInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +25,7 @@ public  class WorkingSecurityUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userInfoFactory.getUserInfo(username);
+        User user = userInfoFactory.getUser(username);
         if(!userIsNull(user)){
             return user;
         }
