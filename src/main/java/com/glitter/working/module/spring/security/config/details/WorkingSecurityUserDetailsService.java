@@ -1,4 +1,4 @@
-package com.glitter.working.module.spring.security.config.userInfo;
+package com.glitter.working.module.spring.security.config.details;
 
 import com.glitter.working.module.spring.security.config.dataFactory.UserInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;

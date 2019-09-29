@@ -6,7 +6,7 @@ import com.glitter.working.module.spring.security.config.dataFactory.factory.Aut
 import com.glitter.working.module.spring.security.config.dataFactory.factory.DefaultAuth;
 import com.glitter.working.module.spring.security.config.dataFactory.factory.DefaultUser;
 import com.glitter.working.module.spring.security.config.dataFactory.factory.UserFactory;
-import com.glitter.working.module.spring.security.config.userInfo.WorkingSecurityUserDetailsService;
+import com.glitter.working.module.spring.security.config.details.WorkingSecurityUserDetailsService;
 import com.glitter.working.module.spring.security.config.dataFactory.DefaultAuthFactory;
 import com.glitter.working.module.spring.security.config.dataFactory.DefaultUserFactory;
 import com.glitter.working.module.spring.security.config.dataFactory.MetadataSourceFactory;
