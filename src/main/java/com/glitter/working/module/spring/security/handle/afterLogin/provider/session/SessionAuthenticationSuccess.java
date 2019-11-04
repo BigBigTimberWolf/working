@@ -1,6 +1,5 @@
 package com.glitter.working.module.spring.security.handle.afterLogin.provider.session;
 
-import com.glitter.working.module.util.security.response.HttpCode;
 import com.glitter.working.module.util.security.response.ResponseUtil;
 import com.glitter.working.properties.spring.security.WorkingSecurityLoginProperty;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;

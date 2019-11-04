@@ -19,8 +19,6 @@ public class SecurityAuthenticationFailureHandler implements AuthenticationFailu
    private AuthenticationFailureInterface authenticationFailureInterface;
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        //todo 未添加功能
-        System.out.println("Failure");
         authenticationFailureInterface.onAuthenticationFailure(httpServletRequest,httpServletResponse,e);
     }
 }

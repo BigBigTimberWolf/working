@@ -12,6 +12,7 @@ import com.glitter.working.module.spring.security.config.dataFactory.DefaultUser
 import com.glitter.working.module.spring.security.config.dataFactory.MetadataSourceFactory;
 import com.glitter.working.module.spring.security.config.dataFactory.UserInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,6 +23,8 @@ import org.springframework.security.authentication.DefaultAuthenticationEventPub
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
@@ -97,7 +100,12 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
         return new RestAuthorizeConfigProvider();
     }
 
-
+    @Bean
+    @ConditionalOnProperty(prefix = "working.spring.security",name = "type",havingValue = "mvc")
+    @Order(Byte.MIN_VALUE+2)
+    public AuthorizeConfigProvider mvcAuthorizeConfigProvider(){
+        return new MvcAuthorizeConfigProvider(sessionRegistry());
+    }
 
     @Bean
     public List<AuthorizeConfigProvider> authorizeConfigManagers(List<AuthorizeConfigProvider> authorizeConfigManagers){
@@ -107,6 +115,12 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Bean
     public CoreAuthorizeConfigManager coreAuthorizeConfigManager(List<AuthorizeConfigProvider> authorizeConfigManagers){
         return new CoreAuthorizeConfigManager(authorizeConfigManagers);
+    }
+
+    @Bean
+    @Order(Byte.MIN_VALUE)
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
     }
 
 
@@ -120,7 +134,6 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         coreAuthorizeConfigManager.config(http);
         http.csrf().disable();
-
     }
 
     @Override
