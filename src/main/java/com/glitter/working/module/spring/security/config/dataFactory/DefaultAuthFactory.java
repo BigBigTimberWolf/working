@@ -1,7 +1,9 @@
 package com.glitter.working.module.spring.security.config.dataFactory;
 
 import com.glitter.working.module.spring.security.config.dataFactory.factory.AuthFactory;
+import com.glitter.working.module.spring.security.config.dataFactory.factory.DefaultAuth;
 import com.glitter.working.module.spring.security.handle.SecurityAccessConfigHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
  * @author: Player
  * @create: 2019-09-02
  **/
+@Slf4j
 public  class DefaultAuthFactory implements MetadataSourceFactory {
 
 
@@ -32,7 +35,10 @@ public  class DefaultAuthFactory implements MetadataSourceFactory {
     /*获取url有哪些权限可以访问*/
     public LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> getMetadataSource(HttpServletRequest request) {
         LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> requestMap=new LinkedHashMap<>();
-
+        if (authFactory instanceof DefaultAuth){
+            log.info("Enable defaultAuth...");
+        }
+        log.info("{}->{}:{}",authFactory.getClass().getName(),"getAuth",authFactory.getAuth().toString());
         Map<String, List<String>> auth = authFactory.getAuth();
         if(MapUtils.isEmpty(auth)){
             return null;

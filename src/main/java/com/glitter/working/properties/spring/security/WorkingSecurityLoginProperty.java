@@ -14,7 +14,7 @@ public class WorkingSecurityLoginProperty {
     /*登录链接*/
     private String loginUrl="/login";
     /*登录页面*/
-    private String loginPage="/login/page";
+    private String loginPage="/login";
     /*登录成功页面*/
     private String successForwardUrl="/";
 
@@ -23,4 +23,15 @@ public class WorkingSecurityLoginProperty {
 
     /*注销成功之后跳转url*/
     private String logoutSuccess="/logout/success";
+
+    @Override
+    public String toString() {
+        return "{" +
+                "loginUrl='" + loginUrl + '\'' +
+                ", loginPage='" + loginPage + '\'' +
+                ", successForwardUrl='" + successForwardUrl + '\'' +
+                ", logoutUrl='" + logoutUrl + '\'' +
+                ", logoutSuccess='" + logoutSuccess + '\'' +
+                '}';
+    }
 }

@@ -1,6 +1,11 @@
 package com.glitter.working.module.spring.security.handle.afterLogin;
 
+import com.glitter.working.module.util.security.response.HttpCode;
+import com.glitter.working.module.util.security.response.ResponseUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -13,10 +18,14 @@ import java.io.IOException;
  * @author: Player
  * @create: 2019-09-18
  **/
-public class SecurityAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public  class SecurityAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
+    @Autowired
+    private AuthenticationSuccessInterface authenticationSuccess;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        //todo 未添加功能
-        System.out.println("success");
+        authenticationSuccess.onAuthenticationSuccess(httpServletRequest,httpServletResponse,authentication);
+
     }
 }

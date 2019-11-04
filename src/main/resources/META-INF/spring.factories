@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.glitter.working.config.WorkingConfigurer,\
   com.glitter.working.config.spring.security.WorkingSecurityConfigurer,\
+  com.glitter.working.config.spring.security.handle.AfterLoginConfigurer,\
   com.glitter.working.config.spring.web.WorkWebDebuggerConfigurer

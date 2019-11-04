@@ -1,5 +1,6 @@
 package com.glitter.working.module.spring.security.handle.afterLogin;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
@@ -14,9 +15,12 @@ import java.io.IOException;
  * @create: 2019-09-18
  **/
 public class SecurityAuthenticationFailureHandler implements AuthenticationFailureHandler {
+   @Autowired
+   private AuthenticationFailureInterface authenticationFailureInterface;
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         //todo 未添加功能
         System.out.println("Failure");
+        authenticationFailureInterface.onAuthenticationFailure(httpServletRequest,httpServletResponse,e);
     }
 }

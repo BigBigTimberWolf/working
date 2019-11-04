@@ -84,7 +84,7 @@ public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
     /*登录配置*/
     @Bean
-    @ConditionalOnMissingBean(EnableLoginAuthorizeConfigProvider.class)
+    @ConditionalOnProperty(prefix = "working.spring.security.login",name = "enable",havingValue = "false")
     @Order(Byte.MIN_VALUE)
     public AuthorizeConfigProvider loginAuthorizeConfigProvider(){
         return new LoginAuthorizeConfigProvider();

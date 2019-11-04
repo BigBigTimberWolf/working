@@ -30,6 +30,9 @@ public class DefaultUserFactory implements UserInfoFactory {
     @Override
     public User getUser(String username) {
         User user = userFactory.getUser(username);
+        if(user==null){
+            return null;
+        }
         Collection<GrantedAuthority> authorities = user.getAuthorities();
         Collection<GrantedAuthority> grantedAuthorities=new ArrayList<>();
         authorities.forEach(grantedAuthority -> {
