@@ -21,4 +21,7 @@ public class WorkingSecurityProperty {
     @NestedConfigurationProperty
     private WorkingSecurityLoginProperty login;
 
+    @NestedConfigurationProperty
+    private WorkingSecurityRestProperty rest;
+
 }

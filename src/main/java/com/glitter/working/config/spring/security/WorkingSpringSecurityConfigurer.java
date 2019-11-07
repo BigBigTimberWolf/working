@@ -37,7 +37,7 @@ import java.util.List;
 @Configuration
 @ConditionalOnProperty(prefix = "working.spring.security",name = "enable",havingValue = "true")
 @ConditionalOnClass(DefaultAuthenticationEventPublisher.class)
-public class WorkingSecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class WorkingSpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
 
