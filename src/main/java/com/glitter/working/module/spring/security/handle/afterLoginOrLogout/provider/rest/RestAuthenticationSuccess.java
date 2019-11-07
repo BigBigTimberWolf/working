@@ -1,11 +1,10 @@
-package com.glitter.working.module.spring.security.handle.afterLogin.provider.rest;
+package com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest;
 
 import com.glitter.working.module.cache.working.WorkingCache;
 import com.glitter.working.module.spring.security.modal.JsonWebToken;
 import com.glitter.working.module.spring.security.util.JWTUtil;
 import com.glitter.working.module.util.security.response.HttpCode;
 import com.glitter.working.module.util.security.response.ResponseUtil;
-import com.glitter.working.properties.spring.security.WorkingSecurityLoginProperty;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Date;
 
 /**

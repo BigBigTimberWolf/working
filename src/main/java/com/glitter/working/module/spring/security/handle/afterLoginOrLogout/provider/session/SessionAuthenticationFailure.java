@@ -1,16 +1,11 @@
-package com.glitter.working.module.spring.security.handle.afterLogin.provider.session;
+package com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session;
 
-import com.glitter.working.module.spring.security.handle.afterLogin.AuthenticationFailureInterface;
 import com.glitter.working.module.util.security.response.ResponseUtil;
-import com.glitter.working.properties.spring.security.WorkingSecurityLoginProperty;
-import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @program:

@@ -1,7 +1,9 @@
-package com.glitter.working.module.spring.security.handle.afterLogin;
+package com.glitter.working.module.spring.security.handle.afterLoginOrLogout;
 
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.rest.RestAuthenticationFailureInterface;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.session.SessionAuthenticationFailureInterface;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest.RestAuthenticationFailure;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest.RestAuthenticationFailureInterface;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session.SessionAuthenticationFailure;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session.SessionAuthenticationFailureInterface;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;

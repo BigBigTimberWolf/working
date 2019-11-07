@@ -1,8 +1,6 @@
-package com.glitter.working.module.spring.security.handle.afterLogin;
+package com.glitter.working.module.spring.security.handle.afterLoginOrLogout;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

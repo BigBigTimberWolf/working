@@ -75,7 +75,7 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
         }
         String tokenCache = workingCache.get(jwtUtil.getTokenName(jsonWebToken.getName()));
         if(StringUtils.isEmpty(tokenCache)||!StringUtils.equals(token,tokenCache)){
-            log.warn("Token[{}]过期的请求:{}",token, httpServletRequest.getRequestURI());
+            log.warn("非法Token:{},{},{}",token,jsonWebToken.getName(),httpServletRequest.getRequestURI());
             ResponseUtil.response(httpServletResponse,403,"非法Token");
             return;
         }

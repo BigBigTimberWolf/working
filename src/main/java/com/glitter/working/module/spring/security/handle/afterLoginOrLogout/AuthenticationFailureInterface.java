@@ -1,4 +1,4 @@
-package com.glitter.working.module.spring.security.handle.afterLogin;
+package com.glitter.working.module.spring.security.handle.afterLoginOrLogout;
 
 import org.springframework.security.core.AuthenticationException;
 

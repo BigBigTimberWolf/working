@@ -1,4 +1,4 @@
-package com.glitter.working.module.spring.security.handle.afterLogin.provider.rest;
+package com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest;
 
 import com.glitter.working.module.util.security.response.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;

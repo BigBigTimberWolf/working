@@ -1,7 +1,8 @@
 package com.glitter.working.module.spring.security.config.adapter.provider;
 
-import com.glitter.working.module.spring.security.handle.afterLogin.SecurityAuthenticationFailureHandler;
-import com.glitter.working.module.spring.security.handle.afterLogin.SecurityAuthenticationSuccessHandler;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.SecurityAuthenticationFailureHandler;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.SecurityAuthenticationSuccessHandler;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.SecurityLogoutHandler;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class EnableLoginAuthorizeConfigProvider implements AuthorizeConfigProvid
 
     @Autowired
     private SecurityAuthenticationSuccessHandler securityAuthenticationSuccessHandler;
+    @Autowired
+    private SecurityLogoutHandler securityLogoutHandler;
 
     @Override
     public void config(HttpSecurity httpSecurity) throws Exception {
@@ -45,6 +48,7 @@ public class EnableLoginAuthorizeConfigProvider implements AuthorizeConfigProvid
                 .failureHandler(securityAuthenticationFailureHandler)
                 .and()
                 .logout()
+                .logoutSuccessHandler(securityLogoutHandler)
                 .logoutUrl(workingSecurityProperty.getLogin().getLogoutUrl())
                 .logoutSuccessUrl(workingSecurityProperty.getLogin().getLogoutSuccess()).permitAll();
     }

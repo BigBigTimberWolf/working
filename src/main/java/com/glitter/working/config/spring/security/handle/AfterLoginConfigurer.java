@@ -1,21 +1,15 @@
 package com.glitter.working.config.spring.security.handle;
 
 import com.glitter.working.config.spring.security.WorkingSpringSecurityConfigurer;
-import com.glitter.working.module.spring.security.config.adapter.provider.MvcAuthorizeConfigProvider;
-import com.glitter.working.module.spring.security.config.adapter.provider.RestAuthorizeConfigProvider;
-import com.glitter.working.module.spring.security.handle.afterLogin.AuthenticationFailureInterface;
-import com.glitter.working.module.spring.security.handle.afterLogin.AuthenticationSuccessInterface;
-import com.glitter.working.module.spring.security.handle.afterLogin.SecurityAuthenticationFailureHandler;
-import com.glitter.working.module.spring.security.handle.afterLogin.SecurityAuthenticationSuccessHandler;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.rest.RestAuthenticationFailure;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.rest.RestAuthenticationFailureInterface;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.rest.RestAuthenticationSuccess;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.rest.RestAuthenticationSuccessInterface;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.session.SessionAuthenticationFailure;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.session.SessionAuthenticationFailureInterface;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.session.SessionAuthenticationSuccess;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.session.SessionAuthenticationSuccessInterface;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.*;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest.RestAuthenticationFailure;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest.RestAuthenticationFailureInterface;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest.RestAuthenticationSuccess;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest.RestAuthenticationSuccessInterface;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session.SessionAuthenticationFailure;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session.SessionAuthenticationFailureInterface;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session.SessionAuthenticationSuccess;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session.SessionAuthenticationSuccessInterface;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -63,6 +57,11 @@ public class AfterLoginConfigurer {
     @Bean
     public SecurityAuthenticationSuccessHandler securityAuthenticationSuccessHandler(){
         return new SecurityAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public SecurityLogoutHandler securityLogoutHandler(){
+        return new SecurityLogoutHandler();
     }
 
 }

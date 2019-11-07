@@ -1,15 +1,11 @@
-package com.glitter.working.module.spring.security.handle.afterLogin;
+package com.glitter.working.module.spring.security.handle.afterLoginOrLogout;
 
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.rest.RestAuthenticationFailureInterface;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.rest.RestAuthenticationSuccessInterface;
-import com.glitter.working.module.spring.security.handle.afterLogin.provider.session.SessionAuthenticationFailureInterface;
-import com.glitter.working.module.util.security.response.HttpCode;
-import com.glitter.working.module.util.security.response.ResponseUtil;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.rest.RestAuthenticationSuccessInterface;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session.SessionAuthenticationFailureInterface;
+import com.glitter.working.module.spring.security.handle.afterLoginOrLogout.provider.session.SessionAuthenticationSuccessInterface;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -38,7 +34,7 @@ public  class SecurityAuthenticationSuccessHandler implements AuthenticationSucc
                     authenticationSuccessInterface.onAuthenticationSuccess(httpServletRequest,httpServletResponse,authentication);
                 }
             }else if ("mvc".equals(workingSecurityProperty.getType())){
-                if(authenticationSuccessInterface instanceof SessionAuthenticationFailureInterface){
+                if(authenticationSuccessInterface instanceof SessionAuthenticationSuccessInterface){
                     authenticationSuccessInterface.onAuthenticationSuccess(httpServletRequest,httpServletResponse,authentication);
                 }
             }
