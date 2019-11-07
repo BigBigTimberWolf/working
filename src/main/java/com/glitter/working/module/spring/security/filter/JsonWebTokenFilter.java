@@ -4,6 +4,7 @@ import com.glitter.working.module.cache.working.WorkingCache;
 import com.glitter.working.module.security.encryption.RSACoder;
 import com.glitter.working.module.spring.security.modal.JsonWebToken;
 import com.glitter.working.module.spring.security.util.JWTUtil;
+import com.glitter.working.module.util.security.response.ResponseUtil;
 import com.glitter.working.properties.spring.security.WorkingSecurityProperty;
 import com.glitter.working.properties.spring.security.WorkingSecurityRestProperty;
 import lombok.extern.slf4j.Slf4j;
@@ -37,16 +38,18 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
     @Autowired
     private WorkingCache<String,String> workingCache;
 
-    @Autowired
+
     private UserDetailsService userDetailsService;
 
+    public JsonWebTokenFilter(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
-    private WorkingSecurityRestProperty rest;
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-         rest = workingSecurityProperty.getRest();
+        WorkingSecurityRestProperty rest = workingSecurityProperty.getRest();
         /*获取Token*/
         String token = httpServletRequest.getHeader(rest.getHeader());
         if(StringUtils.isEmpty(token)){
@@ -67,12 +70,14 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
 
         if(jsonWebToken==null){
             log.warn("无效Token的请求:{}", httpServletRequest.getRequestURI());
-            // todo token无效
+            ResponseUtil.response(httpServletResponse,400,"无效Token的请求");
+            return;
         }
         String tokenCache = workingCache.get(jwtUtil.getTokenName(jsonWebToken.getName()));
         if(StringUtils.isEmpty(tokenCache)||!StringUtils.equals(token,tokenCache)){
             log.warn("Token[{}]过期的请求:{}",token, httpServletRequest.getRequestURI());
-            // todo token无效
+            ResponseUtil.response(httpServletResponse,403,"非法Token");
+            return;
         }
 
         /*从security中加载用户相关信息*/

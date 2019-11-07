@@ -23,7 +23,7 @@ public class JWTUtil {
     private RSACoder rsaCoder;
     public  JsonWebToken getJsonWebToken(String token){
         try {
-            String jwt = rsaCoder.encryptByPrivateKey(token);
+            String jwt = rsaCoder.decryptByPublicKey(token);
             if(StringUtils.isNotEmpty(jwt)){
                 JsonWebToken jsonWebToken = JSON.parseObject(jwt, JsonWebToken.class);
                 if(jsonWebToken==null){

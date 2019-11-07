@@ -11,6 +11,7 @@ import com.glitter.working.module.spring.security.config.dataFactory.DefaultAuth
 import com.glitter.working.module.spring.security.config.dataFactory.DefaultUserFactory;
 import com.glitter.working.module.spring.security.config.dataFactory.MetadataSourceFactory;
 import com.glitter.working.module.spring.security.config.dataFactory.UserInfoFactory;
+import com.glitter.working.module.spring.security.filter.JsonWebTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -71,6 +72,10 @@ public class WorkingSpringSecurityConfigurer extends WebSecurityConfigurerAdapte
     public WorkingSecurityUserDetailsService securityUserDetailsService(){
         return  new WorkingSecurityUserDetailsService();
     }
+    @Bean
+    public JsonWebTokenFilter jsonWebTokenFilter(){
+        return new JsonWebTokenFilter(securityUserDetailsService());
+    }
     /*后置加载器、加载自定义投票器*/
     @Bean
     @Order(Byte.MIN_VALUE+1)
@@ -97,7 +102,7 @@ public class WorkingSpringSecurityConfigurer extends WebSecurityConfigurerAdapte
     @ConditionalOnProperty(prefix = "working.spring.security",name = "type",havingValue = "rest")
     @Order(Byte.MIN_VALUE+2)
     public AuthorizeConfigProvider restAuthorizeConfigProvider(){
-        return new RestAuthorizeConfigProvider();
+        return new RestAuthorizeConfigProvider(jsonWebTokenFilter());
     }
 
     @Bean

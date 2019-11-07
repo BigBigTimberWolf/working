@@ -11,7 +11,7 @@ import java.util.Date;
  * @create: 2019-11-07
  **/
 @Data
-public abstract class JsonWebToken {
+public class JsonWebToken {
     private String name;
     private long expirationTime;
 

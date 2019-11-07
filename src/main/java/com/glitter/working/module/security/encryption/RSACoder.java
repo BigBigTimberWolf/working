@@ -94,6 +94,7 @@ public class RSACoder {
         return null;
     }
 
+    /*解码*/
     public String decryptByPublicKey(String data) throws BadPaddingException, IllegalBlockSizeException {
         if(StringUtils.isNotEmpty(data)){
             byte[] bytes = decryptByPublicKey(Base64.decodeBase64(data));

@@ -27,6 +27,7 @@ public class WorkingConfigurer {
     /*securityPropertyBean*/
     @Bean
     public WorkingSecurityProperty workingSecurityProperty(){
+
         return this.workingProperty.getSpring().getSecurity();
     }
 

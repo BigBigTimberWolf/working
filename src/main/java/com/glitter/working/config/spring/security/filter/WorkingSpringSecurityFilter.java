@@ -18,9 +18,6 @@ public class WorkingSpringSecurityFilter {
         return new JWTUtil();
     }
 
-    @Bean
-    public JsonWebTokenFilter jsonWebTokenFilter(){
-        return new JsonWebTokenFilter();
-    }
+
 
 }
