@@ -1,7 +1,6 @@
 package com.glitter.working.module.spring.security.filter;
 
 import com.glitter.working.module.cache.working.WorkingCache;
-import com.glitter.working.module.security.encryption.RSACoder;
 import com.glitter.working.module.spring.security.modal.JsonWebToken;
 import com.glitter.working.module.spring.security.util.JWTUtil;
 import com.glitter.working.module.util.security.response.ResponseUtil;
@@ -64,6 +63,7 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
             return;
         }
         //去除token头
+        String originalToken=token;
         token=token.substring(rest.getPrefix().length());
 
         JsonWebToken jsonWebToken = jwtUtil.getJsonWebToken(token);
@@ -78,6 +78,8 @@ public class JsonWebTokenFilter extends OncePerRequestFilter {
             log.warn("非法Token:{},{},{}",token,jsonWebToken.getName(),httpServletRequest.getRequestURI());
             ResponseUtil.response(httpServletResponse,403,"非法Token");
             return;
+        }else {
+            workingCache.set(jwtUtil.getTokenName(jsonWebToken.getName()),originalToken,rest.getTime());
         }
 
         /*从security中加载用户相关信息*/
