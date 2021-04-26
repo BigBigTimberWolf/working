@@ -14,7 +14,7 @@
         <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
         <apache-commons-collections.version>3.2.2</apache-commons-collections.version>
         <apache-commons-codec.version>1.11</apache-commons-codec.version>
-        <apache-commons-io.version>2.6</apache-commons-io.version>
+        <apache-commons-io.version>2.7</apache-commons-io.version>
         <apache-commons-lang.version>3.9</apache-commons-lang.version>
         <joor.version>0.9.6</joor.version>
         <json.fastjson.version>1.2.56</json.fastjson.version>
