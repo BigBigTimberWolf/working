@@ -17,7 +17,7 @@
         <apache-commons-io.version>2.6</apache-commons-io.version>
         <apache-commons-lang.version>3.9</apache-commons-lang.version>
         <joor.version>0.9.6</joor.version>
-        <json.fastjson.version>1.2.56</json.fastjson.version>
+        <json.fastjson.version>1.2.83</json.fastjson.version>
     </properties>
 
 
